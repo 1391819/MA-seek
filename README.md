@@ -52,7 +52,7 @@ $PROJECT_ROOT
 - [x] Decide on algorithm and components to be used
 - [x] Train and test the model
 - [ ] Fix environment problems discussed in Evaluation section
-- [ ] Furhter increase the training time and analyse new results
+- [ ] Further increase the training time and analyse new results
 - [ ] Improve project scalability (i.e., number of agents, grid size)
 - [ ] Implement a prioritised experience replay
 - [ ] Investigate different algorithms and reward schemes
