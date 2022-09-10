@@ -164,7 +164,9 @@ In order to evaluate our two agents, we decided on observing the returned averag
   <img src="screenshots/number_of_collisions.png" alt="number of collisions" />
   <br>
   <br>
-  <p style="font-size: 11px; font-style: italic;">Figure 6: The number of collisions for each episode. Hider in orange, Seeker in blue.</p>
+
+_Figure 6: The number of collisions for each episode. Hider in orange, Seeker in blue._
+
 </div>
 
 Although I am definitely satisfied with the final software and results, there are a number of flaws which are mainly design related. More particularly, there are two key issues with regards to the environment itself which could have affected the final learning process. Until proven otherwise, we must assume that they did. The following are:
