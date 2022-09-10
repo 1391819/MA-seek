@@ -58,8 +58,7 @@ $PROJECT_ROOT
 - [ ] Investigate different algorithms and reward schemes
 - [ ] Create different files for training and testing
   - Right now, the application is constantly training
-  - Moreover, the exploration/exploitation phase needs to be manually changed
-    in order to see if the agents are learning anything
+  - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
 - [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Highlights
@@ -72,32 +71,30 @@ $PROJECT_ROOT
 
 Two agents, a Seeker (yellow) and a Hider (light blue) are placed within an _11x11_ grid world at random locations. Moreover, 15 walls are also randomly generated at the start of each episode. The action of each agent is defined by a Discrete(8) Gym variable, consisting of rotation (up, down, left, right) and motion (stop, move forward). The observation of each agent does not give it full knowledge about the current state of the environment. More particularly, it only consists of limited data obtained through their personal radar. The latter is defined by a Box(37, 2) Gym variable, and will be discussed more in depth in the design section.
 
-With that being said, each agent makes use of two DRQN networks, a main one for estimating the Q value, and a target one which is used to update the main one after a certain number of episodes with the intention of reducing fluctuations and achieve more stable training. This decision of using separate DRQNs for each agent, thereby using the environment as the only source of interaction between them, is mainly attributed to its simplicity, and decentralised nature. Networks aside, each agent also makes use of two other main components, a decayedepsilon-greedy policy, and a replay buffer (or experience replay). By using the former, each agent’s policy is initially set to a relatively high number, indicating the probability for which its action will be randomly selected from the action space. Following this, it gradually decays until it reaches a minimum amount, helping us achieve the optimal trade-off between exploration and exploitation. The latter, on the other hand, is used to store the agents’ transitions and randomly select them during the training process. More specifically, its purpose is to avoid highly correlated training samples thus improving the convergence of the main network.
+With that being said, each agent makes use of two DRQN networks, a main one for estimating the Q value, and a target one which is used to update the main one after a certain number of episodes with the intention of reducing fluctuations and achieve more stable training. This decision of using separate DRQNs for each agent, thereby using the environment as the only source of interaction between them, is mainly attributed to its simplicity, and decentralised nature. Networks aside, each agent also makes use of two other main components, a decayed epsilon-greedy policy, and a replay buffer (or experience replay). By using the former, each agent’s policy is initially set to a relatively high number, indicating the probability for which its action will be randomly selected from the action space. Following this, it gradually decays until it reaches a minimum amount, helping us achieve the optimal trade-off between exploration and exploitation. The latter, on the other hand, is used to store the agents’ transitions and randomly select them during the training process. More specifically, its purpose is to avoid highly correlated training samples thus improving the convergence of the main network.
 
 Compared to DQNs, DRQNs have been proved to properly converge, even when full information about the environment was not available. This is accomplished by storing previous observations for a number of timesteps thus allowing the agent to learn from the environment. More particularly, the main difference between the two algorithms is that, in DRQNs, an LSTM layer is introduced after the input layer, with the main idea that there is something that can be learnt from a sequence of observations.
 
 ## Design
 
-The first step to successfully carry out this project was to build the environment where the
-agents would have operated in. At this stage, properly designing things such as action space,
-observation space, and reward scheme was essential.
+The first step to successfully carry out this project was to build the environment where the agents would have operated in. At this stage, properly designing things such as action space, observation space, and reward scheme was essential.
 
-In order to implement our system, we made use of Python’s pygame library and TensorFlow. Each row of the agent’s observation space sees approximately 5° (for a total of 180°) and returns the first object the ray met in that direction and its distancethe agent (_Figure 1_).
+In order to implement our system, we made use of Python’s Pygame library and TensorFlow. Each row of the agent’s observation space sees approximately 5° (for a total of 180°) and returns the first object the ray met in that direction and its distance from the agent (_Figure 1_).
 
 <div align="center">
   <img src="screenshots/observation_space.png" alt="agent observation space" />
   <br>
   <br>
-  <p style="font-size: 11px; font-style: italic"> Figure 1: A visual representation of the radar as well as the overall environment. </p>
+
+_Figure 1: A visual representation of the radar as well as the overall environment._
+
 </div>
 
 More particularly, the radar implementation is designed as follows:
 
-- Draw a ray from agent’s location (x, y) to (x + MAX_DISTANCE_cos(angle), y +
-  MAX_DISTANCE_sin(angle))
-- Find the first intersection and return its distance from the agent and object type
-  (WALL/OPPONENT)
-- If no object is detected, return (MAX_DISTANCE, EMPTY)
+- Draw a ray from agent’s location _(x, y)_ to _(x + MAX_DISTANCE_cos(angle), y + MAX_DISTANCE_sin(angle))_
+- Find the first intersection and return its distance from the agent and object type _(WALL/OPPONENT)_
+- If no object is detected, return _(MAX_DISTANCE, EMPTY)_
 
 Following this, it was time to decide the reward scheme that would have been used (_Table 1_). A lot of testing has been carried out with regards to this matter. It was critical to find the perfect balance between a) number of rewards and b) how much each agent was rewarded, in order for our agents to be able to learn the right things. For instance, during some initial experiments, the seeker was given a negative reward (i.e., -1) for distance travelled and a smaller one for not moving during each timestep (i.e., -0.1). However, this subsequently led the seeker to learn that the way to maximise its reward was by standing still, which was to be considered as a failure.
 
@@ -114,7 +111,8 @@ Following this, it was time to decide the reward scheme that would have been use
 | If opponent was inside radar, and it is not anymore                               |   -5   |    +5 |
 | If opponent was inside radar, and now the distance is smaller than 1 cell in size |  +2.5  |  -2.5 |
 
-<p style="font-size: 11px; font-style: italic;">Table 1: Reward scheme for our environment.</p>
+_Table 1: Reward scheme for our environment._
+
 </div>
 
 ## Implementation
@@ -125,7 +123,9 @@ As previously stated, each agent uses two DRQN networks, a main one and a target
   <img src="screenshots/drqn_architecture.png" alt="drqn architecture" />
   <br>
   <br>
-  <p style="font-size: 11px; font-style: italic;">Figure 2: Deep Recurrent Q-Network architecture</p>
+
+_Figure 2: Deep Recurrent Q-Network architecture._
+
 </div>
 
 With that being said, a wide variety of hyper-parameters’ optimisation experiments were carried out, and we found the “optimal” ones to be the following:
@@ -148,7 +148,8 @@ With that being said, a wide variety of hyper-parameters’ optimisation experim
 | Target update        |   10   | After how many episodes the target network is updated |
 | Replay iterations    |   10   |              How long the main network is trained for |
 
-<p style="font-size: 11px; font-style: italic;">Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings.</p>
+_Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings._
+
 </div>
 
 ## Evaluation
@@ -159,7 +160,8 @@ In order to evaluate our two agents, we decided on observing the returned averag
   <img src="screenshots/average_cumulative_reward.png" alt="average cumulative reward" />
   <br>
   <br>
-  <p style="font-size: 13; font-style: italic;">Figure 5: The average cumulative reward for both agents across 3K episodes. Hider in orange, Seeker in blue.</p>
+
+_Figure 5: The average cumulative reward for both agents across 3K episodes. Hider in orange, Seeker in blue._
 
   <img src="screenshots/number_of_collisions.png" alt="number of collisions" />
   <br>
