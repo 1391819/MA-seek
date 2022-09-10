@@ -88,7 +88,7 @@ In order to implement our system, we made use of Python’s pygame library and T
   <img src="screenshots/observation_space.png" alt="agent observation space" />
   <br>
   <br>
-  <p style="font-size: 13; font-style: italic;">Figure 1: A visual representation of the radar as well as the overall environment.</p>
+  <p style="font-size: 11px; font-style: italic"> Figure 1: A visual representation of the radar as well as the overall environment. </p>
 </div>
 
 More particularly, the radar implementation is designed as follows:
@@ -114,7 +114,7 @@ Following this, it was time to decide the reward scheme that would have been use
 | If opponent was inside radar, and it is not anymore                               |   -5   |    +5 |
 | If opponent was inside radar, and now the distance is smaller than 1 cell in size |  +2.5  |  -2.5 |
 
-<p style="font-size: 13; font-style: italic;">Table 1: Reward scheme for our environment.</p>
+<p style="font-size: 11px; font-style: italic;">Table 1: Reward scheme for our environment.</p>
 </div>
 
 ## Implementation
@@ -125,7 +125,7 @@ As previously stated, each agent uses two DRQN networks, a main one and a target
   <img src="screenshots/drqn_architecture.png" alt="drqn architecture" />
   <br>
   <br>
-  <p style="font-size: 13; font-style: italic;">Figure 2: Deep Recurrent Q-Network architecture</p>
+  <p style="font-size: 11px; font-style: italic;">Figure 2: Deep Recurrent Q-Network architecture</p>
 </div>
 
 With that being said, a wide variety of hyper-parameters’ optimisation experiments were carried out, and we found the “optimal” ones to be the following:
@@ -148,7 +148,7 @@ With that being said, a wide variety of hyper-parameters’ optimisation experim
 | Target update        |   10   | After how many episodes the target network is updated |
 | Replay iterations    |   10   |              How long the main network is trained for |
 
-<p style="font-size: 13; font-style: italic;">Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings.</p>
+<p style="font-size: 11px; font-style: italic;">Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings.</p>
 </div>
 
 ## Evaluation
@@ -164,7 +164,7 @@ In order to evaluate our two agents, we decided on observing the returned averag
   <img src="screenshots/number_of_collisions.png" alt="number of collisions" />
   <br>
   <br>
-  <p style="font-size: 13; font-style: italic;">Figure 6: The number of collisions for each episode. Hider in orange, Seeker in blue.</p>
+  <p style="font-size: 11px; font-style: italic;">Figure 6: The number of collisions for each episode. Hider in orange, Seeker in blue.</p>
 </div>
 
 Although I am definitely satisfied with the final software and results, there are a number of flaws which are mainly design related. More particularly, there are two key issues with regards to the environment itself which could have affected the final learning process. Until proven otherwise, we must assume that they did. The following are:
