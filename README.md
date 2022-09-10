@@ -60,7 +60,7 @@ $PROJECT_ROOT
   - Right now, the application is constantly training
   - Moreover, the exploration/exploitation phase needs to be manually changed
     in order to see if the agents are learning anything
-- [ ] Experiment using Ray
+- [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Highlights
 
