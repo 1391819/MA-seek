@@ -22,29 +22,29 @@ The purpose of this project is to study emergent competitive strategies between 
 
 ## Project structure
 
-    $PROJECT_ROOT
-    │   # Readme utilities
-    ├── screenshots
-    │   # Introductory research
-    ├── Report.pdf
-    │   # Key scripts
-    └─┬ src
-      │   # Training logs (using Tensorboard)
-      ├── logs
-      │   # Saved models (~3K epochs)
-      ├── models
-      │   # Starting file
-      ├── main.py
-      │   # Game environment
-      ├── game.py
-      │   # Environment handler
-      ├── maenv.py
-      │   # Replay buffer component
-      ├── replay_buffer.py
-      │   # Small utility for finding optimal epsilon value
-      ├── epsilon.py
-      │   # DRQN
-      └── drqn.py
+`$PROJECT_ROOT
+│   # Readme utilities
+├── screenshots
+│   # Introductory research
+├── Report.pdf
+│   # Key scripts
+└─┬ src
+  │   # Training logs (using Tensorboard)
+  ├── logs
+  │   # Saved models (~3K epochs)
+  ├── models
+  │   # Starting file
+  ├── main.py
+  │   # Game environment
+  ├── game.py
+  │   # Environment handler
+  ├── maenv.py
+  │   # Replay buffer component
+  ├── replay_buffer.py
+  │   # Small utility for finding optimal epsilon value
+  ├── epsilon.py
+  │   # DRQN
+  └── drqn.py`
 
 ## Roadmap
 
@@ -108,7 +108,7 @@ Following this, it is time to decide the reward scheme that would be used (_Tabl
 | Distance travelled                                                                |   -1   |    +1 |
 | No movement performed                                                             |   -3   |    -3 |
 | Hider caught                                                                      |  +100  |  -100 |
-| If opponent is inside radar and distance is bigger than 2 cells in size           |  +0.25 | -0.25 |
+| If opponent is inside radar and distance is bigger than 2 cells in size           | +0.25  | -0.25 |
 | If opponent is inside radar and distance is smaller than 2 cells in size          |  +0.5  |  -0.5 |
 | If opponent was inside radar, and it is not anymore                               |   -5   |    +5 |
 | If opponent was inside radar, and now the distance is smaller than 1 cell in size |  +2.5  |  -2.5 |
@@ -134,15 +134,15 @@ With that being said, a wide variety of hyper-parameters’ optimisation experim
 
 <div align="center">
 
-| Hyperparameter          |  Value | Description                                           |
+| Hyperparameter          | Value  | Description                                           |
 | :---------------------- | :----: | :---------------------------------------------------- |
 | Max training iterations |  3000  | The maximum number of episodes                        |
-| Max tries               |   400  | Maximum number of timesteps for each episode          |
-| Batch size              |   128  | Number of training samples per update                 |
-| Buffer size             |  50000 | Size of the experience replay dataset                 |
+| Max tries               |  400   | Maximum number of timesteps for each episode          |
+| Batch size              |  128   | Number of training samples per update                 |
+| Buffer size             | 50000  | Size of the experience replay dataset                 |
 | Learning rate           | 0.0003 | Rate used by the optimiser                            |
 | Update rule             |  ADAM  | The parameter update rule used by the optimiser       |
-| Initial ℰ               |   1.0  | Initial ℰ value in decayed ℰ greedy policy            |
+| Initial ℰ               |  1.0   | Initial ℰ value in decayed ℰ greedy policy            |
 | Minimum ℰ               |  0.05  | Minimum ℰ value (~67% exploration)                    |
 | ℰ decay                 | 0.9985 | Rate at which ℰ decreases                             |
 | Timesteps               |   20   | Number of previous observations stored                |
