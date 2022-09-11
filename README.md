@@ -48,6 +48,7 @@ $PROJECT_ROOT
 
 ## Roadmap
 
+- [x] Research how AI has been used in games
 - [x] Design the game
 - [x] Decide on algorithm and components to be used
 - [x] Train and test the model
