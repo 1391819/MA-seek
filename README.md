@@ -12,13 +12,13 @@ The purpose of this project is to study emergent competitive strategies between 
 
 ## Stack
 
-- Multi agent reinforcement learning
+- Multi Agent Reinforcement Learning
 - Deep Recurrent Q-Network
-- Decayed psilon greedy policy
-- Replay buffer
 - OpenAI Gym
 - Tensorflow
 - Pygame
+- Decayed Epsilon Greedy Policy
+- Experience replay
 
 ## Project structure
 
@@ -48,7 +48,7 @@ $PROJECT_ROOT
 
 ## Roadmap
 
-- [x] Design game with manual inputs
+- [x] Design the game
 - [x] Decide on algorithm and components to be used
 - [x] Train and test the model
 - [ ] Fix environment problems discussed in Evaluation section
@@ -59,6 +59,7 @@ $PROJECT_ROOT
 - [ ] Create different files for training and testing
   - Right now, the application is constantly training
   - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
+- [ ] Create a new environment for testing the agents
 - [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Highlights
@@ -71,15 +72,15 @@ $PROJECT_ROOT
 
 Two agents, a Seeker (yellow) and a Hider (light blue) are placed within an _11x11_ grid world at random locations. Moreover, 15 walls are also randomly generated at the start of each episode. The action of each agent is defined by a Discrete(8) Gym variable, consisting of rotation (up, down, left, right) and motion (stop, move forward). The observation of each agent does not give it full knowledge about the current state of the environment. More particularly, it only consists of limited data obtained through their personal radar. The latter is defined by a Box(37, 2) Gym variable, and will be discussed more in depth in the design section.
 
-With that being said, each agent makes use of two DRQN networks, a main one for estimating the Q value, and a target one which is used to update the main one after a certain number of episodes with the intention of reducing fluctuations and achieve more stable training. This decision of using separate DRQNs for each agent, thereby using the environment as the only source of interaction between them, is mainly attributed to its simplicity, and decentralised nature. Networks aside, each agent also makes use of two other main components, a decayed epsilon-greedy policy, and a replay buffer (or experience replay). By using the former, each agent’s policy is initially set to a relatively high number, indicating the probability for which its action will be randomly selected from the action space. Following this, it gradually decays until it reaches a minimum amount, helping us achieve the optimal trade-off between exploration and exploitation. The latter, on the other hand, is used to store the agents’ transitions and randomly select them during the training process. More specifically, its purpose is to avoid highly correlated training samples thus improving the convergence of the main network.
+With that being said, each agent makes use of two DRQNs, a main one for estimating the Q value, and a target one which is used to update the main one after a certain number of episodes with the intention of reducing fluctuations and achieve more stable training. This decision of using separate DRQNs for each agent, thereby using the environment as the only source of interaction between them, is mainly attributed to its simplicity, and decentralised nature. Networks aside, each agent also makes use of two other main components, a decayed epsilon-greedy policy, and a replay buffer (or experience replay). By using the former, each agent’s policy is initially set to a relatively high number, indicating the probability for which its action will be randomly selected from the action space. Following this, it gradually decays until it reaches a minimum amount, helping us achieve the optimal trade-off between exploration and exploitation (Yogeswaran and Ponnambalam, [2012](https://link.springer.com/article/10.1007/s12597-012-0077-2)). The latter, on the other hand, is used to store the agents’ transitions and randomly select them during the training process. More specifically, its purpose is to avoid highly correlated training samples thus improving the convergence of the main network (Zhang and Sutton, [2017](https://arxiv.org/abs/1712.01275)).
 
-Compared to DQNs, DRQNs have been proved to properly converge, even when full information about the environment was not available. This is accomplished by storing previous observations for a number of timesteps thus allowing the agent to learn from the environment. More particularly, the main difference between the two algorithms is that, in DRQNs, an LSTM layer is introduced after the input layer, with the main idea that there is something that can be learnt from a sequence of observations.
+Compared to DQNs (Mnih et al., [2013](https://arxiv.org/abs/1312.5602)), DRQNs have been proved to properly converge, even when full information about the environment was not available (Hausknecht and Stone, [2015](https://doi.org/10.48550/ARXIV.1507.06527)). This is accomplished by storing previous observations for a number of timesteps thus allowing the agent to learn from the environment. More particularly, the main difference between the two algorithms is that, in DRQNs, an LSTM layer is introduced after the input layer, with the main idea that there is something that can be learnt from a sequence of observations.
 
 ## Design
 
-The first step to successfully carry out this project was to build the environment where the agents would have operated in. At this stage, properly designing things such as action space, observation space, and reward scheme was essential.
+The first step to successfully carry out this project is to build the environment where the agents would operate in. At this stage, properly designing things such as action space, observation space, and reward scheme is essential.
 
-In order to implement our system, we made use of Python’s Pygame library and TensorFlow. Each row of the agent’s observation space sees approximately 5° (for a total of 180°) and returns the first object the ray met in that direction and its distance from the agent (_Figure 1_).
+In order to implement our system, we decided on using Python’s Pygame library and TensorFlow. Each row of the agent’s observation space sees approximately 5° (for a total of 180°) and returns the first object the ray met in that direction and its distance from the agent (_Figure 1_).
 
 <div align="center">
   <img src="screenshots/observation_space.png" alt="agent observation space" />
@@ -96,7 +97,7 @@ More particularly, the radar implementation is designed as follows:
 - Find the first intersection and return its distance from the agent and object type _(WALL/OPPONENT)_
 - If no object is detected, return _(MAX_DISTANCE, EMPTY)_
 
-Following this, it was time to decide the reward scheme that would have been used (_Table 1_). A lot of testing has been carried out with regards to this matter. It was critical to find the perfect balance between a) number of rewards and b) how much each agent was rewarded, in order for our agents to be able to learn the right things. For instance, during some initial experiments, the seeker was given a negative reward (i.e., -1) for distance travelled and a smaller one for not moving during each timestep (i.e., -0.1). However, this subsequently led the seeker to learn that the way to maximise its reward was by standing still, which was to be considered as a failure.
+Following this, it is time to decide the reward scheme that would be used (_Table 1_). A lot of testing has been carried out with regards to this matter. It was critical to find the perfect balance between a) number of rewards and b) how much each agent was rewarded, in order for our agents to be able to learn the right things. For instance, during some initial experiments, the seeker was given a negative reward (i.e., -1) for distance travelled and a smaller one for not moving during each timestep (i.e., -0.1). However, this subsequently led the seeker to learn that the way to maximise its reward was by standing still, which was to be considered as a failure.
 
 <div align="center">
 
@@ -117,7 +118,7 @@ _Table 1: Reward scheme for our environment._
 
 ## Implementation
 
-As previously stated, each agent uses two DRQN networks, a main one and a target one. Both are made up of an Input, an LSTM, and two Dense layers, with size 128 and 8 (dimension of the action space), respectively. Moreover, the Input layer is made up of the 20 previous observations, whilst the LSTM layer has a size of 256. A visual representation can be seen in _Figure 2_:
+As previously stated, each agent uses two DRQNs, a main one and a target one. Both are made up of an Input, an LSTM, and two Dense layers, with size 128 and 8 (dimension of the action space), respectively. Moreover, the Input layer is made up of the 20 previous observations, whilst the LSTM layer has a size of 256. A visual representation can be seen in _Figure 2_:
 
 <div align="center">
   <img src="screenshots/drqn_architecture.png" alt="drqn architecture" />
@@ -132,21 +133,21 @@ With that being said, a wide variety of hyper-parameters’ optimisation experim
 
 <div align="center">
 
-| Hyperparameter       | Value  |                                           Description |
-| :------------------- | :----: | ----------------------------------------------------: |
-| Max train iterations |  3000  |                        The maximum number of episodes |
-| Max tries            |  400   |          Maximum number of timesteps for each episode |
-| Batch size           |  128   |                 Number of training samples per update |
-| Buffer size          | 50000  |                 Size of the experience replay dataset |
-| Learning rate        | 0.0003 |                            Rate used by the optimiser |
-| Update rule          |  ADAM  |       The parameter update rule used by the optimiser |
-| Initial ℰ            |  1.0   |            Initial ℰ value in decayed ℰ greedy policy |
-| Minimum ℰ            |  0.05  |                    Minimum ℰ value (~67% exploration) |
-| ℰ decay              | 0.9985 |                             Rate at which ℰ decreases |
-| Timesteps            |   20   |                Number of previous observations stored |
-| Gamma                |  0.99  |                How much the future rewarded is valued |
-| Target update        |   10   | After how many episodes the target network is updated |
-| Replay iterations    |   10   |              How long the main network is trained for |
+| Hyperparameter          | Value  | Description                                           |
+| :---------------------- | :----: | :---------------------------------------------------- |
+| Max training iterations |  3000  | The maximum number of episodes                        |
+| Max tries               |  400   | Maximum number of timesteps for each episode          |
+| Batch size              |  128   | Number of training samples per update                 |
+| Buffer size             | 50000  | Size of the experience replay dataset                 |
+| Learning rate           | 0.0003 | Rate used by the optimiser                            |
+| Update rule             |  ADAM  | The parameter update rule used by the optimiser       |
+| Initial ℰ               |  1.0   | Initial ℰ value in decayed ℰ greedy policy            |
+| Minimum ℰ               |  0.05  | Minimum ℰ value (~67% exploration)                    |
+| ℰ decay                 | 0.9985 | Rate at which ℰ decreases                             |
+| Timesteps               |   20   | Number of previous observations stored                |
+| Gamma                   |  0.99  | How much the future rewarded is valued                |
+| Target update           |   10   | After how many episodes the target network is updated |
+| Replay iterations       |   10   | How long the main network is trained for              |
 
 _Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings._
 
@@ -154,7 +155,7 @@ _Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings._
 
 ## Evaluation
 
-In order to evaluate our two agents, we decided on observing the returned average cumulative reward instead of creating a new environment. The reason behind this is that the mentioned metric is considered to be satisfactory for understanding whether an agent is improving or not. Moreover, even after 3K episodes (ℰ min achieved at ~2K) our agents’ models still have not completely converged, proving that longer training is required. Nevertheless, the cumulative reward of both agents is showing an upward trend, indicating that they are learning (_Figure 5_). Both Seeker and Hider learnt to efficiently explore the environment (_Figure 6_). Moreover, the Seeker is learning to effectively catch the Hider within a minimal number of steps, whilst the Hider is learning how to increase its reward by moving as often as possible, and also evade the Seeker. With that being said, all of the metrics considered for the evaluation process overall show signs of learning.
+In order to evaluate our two agents, we decided on observing the returned average cumulative reward instead of creating a new environment. The reason behind this is that the mentioned metric is considered to be satisfactory for understanding whether an agent is improving or not (Mahadevan, [1996](https://link.springer.com/article/10.1007/BF00114727)). Moreover, even after 3K episodes (ℰ min achieved at ~2K) our agents’ models still have not completely converged, proving that longer training is required. Nevertheless, the cumulative reward of both agents is showing an upward trend, indicating that they are learning (_Figure 5_). Both Seeker and Hider learnt to efficiently explore the environment (_Figure 6_). Moreover, the Seeker is learning to effectively catch the Hider within a minimal number of steps, whilst the Hider is learning how to increase its reward by moving as often as possible, and also evade the Seeker. With that being said, all of the metrics considered for the evaluation process overall show signs of learning.
 
 <div align="center">
   <img src="screenshots/average_cumulative_reward.png" alt="average cumulative reward" />
@@ -176,7 +177,7 @@ Although I am definitely satisfied with the final software and results, there ar
 - sometimes the agents are given a reward (i.e., seeker within hider radar), even if there is a wall between them, as long as they are right next to the wall. This, unfortunately, happens due to the way the entire game was built (i.e., parallel lines problem).
 - agents can effectively spawn entirely surrounded by walls, leading to a “useless” episode. This is one of the reasons why we had to introduce a max timesteps variable for each episode.
 
-An exhaustive re-evaluation of the overall design, as well as a further increase with regards to the training length and the number of agents for each team is left as future work. With more particular regards to the latter, different algorithms and reward schemes (i.e., individual vs group-based) are to be investigated. While there several possible adaptations of the Q-Learning algorithm for the multi-agent domain, the one that has been used in this project can be considered relatively simple, and although it provides us with the ability to train agents that have to deal with partially observable environments, it has certain limitations. Our agents are trained using only a limited history of states, meaning that if we would want to further increase the size of our environment, they will not be able to learn the long-term dependencies which exceed the specified history length. Moreover, all states are also stored in the replay memory in order to train the networks, thus drastically increasing its size and the slowness of learning. In this case, other approaches could be taken such as implementing a prioritised experience replay, which has shown to improve the learning process.
+An exhaustive re-evaluation of the overall design, as well as a further increase with regards to the training length and the number of agents for each team is left as future work. With more particular regards to the latter, different algorithms and reward schemes (i.e., individual vs group-based) are to be investigated. While there several possible adaptations of the Q-Learning algorithm for the multi-agent domain, the one that has been used in this project can be considered relatively simple, and although it provides us with the ability to train agents that have to deal with partially observable environments (Hausknecht and Stone, [2015](https://doi.org/10.48550/ARXIV.1507.06527)), it has certain limitations. Our agents are trained using only a limited history of states, meaning that if we would want to further increase the size of our environment, they will not be able to learn the long-term dependencies which exceed the specified history length. Moreover, all states are also stored in the replay memory in order to train the networks, thus drastically increasing its size and the slowness of learning. In this case, other approaches could be taken such as implementing a prioritised experience replay, which has shown to improve the learning process (Schaul et al., [2015](https://doi.org/10.48550/ARXIV.1511.05952)).
 
 ## License
 
