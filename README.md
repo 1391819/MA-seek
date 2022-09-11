@@ -12,17 +12,18 @@ The purpose of this project is to study emergent competitive strategies between 
 
 ## Stack
 
--   Multi Agent Reinforcement Learning
--   Deep Recurrent Q-Network
--   OpenAI Gym
--   Tensorflow
--   Pygame
--   Decayed Epsilon Greedy Policy
--   Experience replay
+- Multi Agent Reinforcement Learning
+- Deep Recurrent Q-Network
+- OpenAI Gym
+- Tensorflow
+- Pygame
+- Decayed Epsilon Greedy Policy
+- Experience replay
 
 ## Project structure
 
-`$PROJECT_ROOT
+```
+$PROJECT_ROOT
 │   # Readme utilities
 ├── screenshots
 │   # Introductory research
@@ -44,24 +45,25 @@ The purpose of this project is to study emergent competitive strategies between 
   │   # Small utility for finding optimal epsilon value
   ├── epsilon.py
   │   # DRQN
-  └── drqn.py`
+  └── drqn.py
+```
 
 ## Roadmap
 
--   [x] Research how AI has been used in games
--   [x] Design the game
--   [x] Decide on algorithm and components to be used
--   [x] Train and test the model
--   [ ] Fix environment problems discussed in Evaluation section
--   [ ] Further increase the training time and analyse new results
--   [ ] Improve project scalability (i.e., number of agents, grid size)
--   [ ] Implement a prioritised experience replay
--   [ ] Investigate different algorithms and reward schemes
--   [ ] Create different files for training and testing
-    -   Right now, the application is constantly training
-    -   Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
--   [ ] Create a new environment for testing the agents
--   [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
+- [x] Research how AI has been used in games
+- [x] Design the game
+- [x] Decide on algorithm and components to be used
+- [x] Train and test the model
+- [ ] Fix environment problems discussed in Evaluation section
+- [ ] Further increase the training time and analyse new results
+- [ ] Improve project scalability (i.e., number of agents, grid size)
+- [ ] Implement a prioritised experience replay
+- [ ] Investigate different algorithms and reward schemes
+- [ ] Create different files for training and testing
+  - Right now, the application is constantly training
+  - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
+- [ ] Create a new environment for testing the agents
+- [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Highlights
 
@@ -94,9 +96,9 @@ _Figure 1: A visual representation of the radar as well as the overall environme
 
 More particularly, the radar implementation is designed as follows:
 
--   Draw a ray from agent’s location _(x, y)_ to _(x + MAX_DISTANCE_cos(angle), y + MAX_DISTANCE_sin(angle))_
--   Find the first intersection and return its distance from the agent and object type _(WALL/OPPONENT)_
--   If no object is detected, return _(MAX_DISTANCE, EMPTY)_
+- Draw a ray from agent’s location _(x, y)_ to _(x + MAX_DISTANCE_cos(angle), y + MAX_DISTANCE_sin(angle))_
+- Find the first intersection and return its distance from the agent and object type _(WALL/OPPONENT)_
+- If no object is detected, return _(MAX_DISTANCE, EMPTY)_
 
 Following this, it is time to decide the reward scheme that would be used (_Table 1_). A lot of testing has been carried out with regards to this matter. It was critical to find the perfect balance between a) number of rewards and b) how much each agent was rewarded, in order for our agents to be able to learn the right things. For instance, during some initial experiments, the seeker was given a negative reward (i.e., -1) for distance travelled and a smaller one for not moving during each timestep (i.e., -0.1). However, this subsequently led the seeker to learn that the way to maximise its reward was by standing still, which was to be considered as a failure.
 
@@ -175,8 +177,8 @@ _Figure 6: The number of collisions for each episode. Hider in orange, Seeker in
 
 Although I am definitely satisfied with the final software and results, there are a number of flaws which are mainly design related. More particularly, there are two key issues with regards to the environment itself which could have affected the final learning process. Until proven otherwise, we must assume that they did. The following are:
 
--   sometimes the agents are given a reward (i.e., seeker within hider radar), even if there is a wall between them, as long as they are right next to the wall. This, unfortunately, happens due to the way the entire game was built (i.e., parallel lines problem).
--   agents can effectively spawn entirely surrounded by walls, leading to a “useless” episode. This is one of the reasons why we had to introduce a max timesteps variable for each episode.
+- sometimes the agents are given a reward (i.e., seeker within hider radar), even if there is a wall between them, as long as they are right next to the wall. This, unfortunately, happens due to the way the entire game was built (i.e., parallel lines problem).
+- agents can effectively spawn entirely surrounded by walls, leading to a “useless” episode. This is one of the reasons why we had to introduce a max timesteps variable for each episode.
 
 An exhaustive re-evaluation of the overall design, as well as a further increase with regards to the training length and the number of agents for each team is left as future work. With more particular regards to the latter, different algorithms and reward schemes (i.e., individual vs group-based) are to be investigated. While there several possible adaptations of the Q-Learning algorithm for the multi-agent domain, the one that has been used in this project can be considered relatively simple, and although it provides us with the ability to train agents that have to deal with partially observable environments (Hausknecht and Stone, [2015](https://doi.org/10.48550/ARXIV.1507.06527)), it has certain limitations. Our agents are trained using only a limited history of states, meaning that if we would want to further increase the size of our environment, they will not be able to learn the long-term dependencies which exceed the specified history length. Moreover, all states are also stored in the replay memory in order to train the networks, thus drastically increasing its size and the slowness of learning. In this case, other approaches could be taken such as implementing a prioritised experience replay, which has shown to improve the learning process (Schaul et al., [2015](https://doi.org/10.48550/ARXIV.1511.05952)).
 
@@ -186,6 +188,6 @@ An exhaustive re-evaluation of the overall design, as well as a further increase
 
 ## Attributions
 
--   <a href="https://www.flaticon.com/free-icons/reinforcement" title="Reinforcement icons">Reinforcement icons created by Flat-icons-com - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/reinforcement" title="Reinforcement icons">Reinforcement icons created by Flat-icons-com - Flaticon</a>
 
 </div>
