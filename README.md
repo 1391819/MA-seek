@@ -26,6 +26,8 @@ The purpose of this project is to study emergent competitive strategies between 
 $PROJECT_ROOT
 │   # Readme utilities
 ├── screenshots
+│   # Introductory research
+├── Report.pdf
 │   # Key scripts
 └─┬ src
   │   # Training logs (using Tensorboard)
