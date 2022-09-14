@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="screenshots/logo.png" alt="logo" width="128"/>
+  <img src="utils/logo.png" alt="logo" width="128"/>
   <h1>Seek: A Multi Agent Environment </h1>
 
 </div>
@@ -25,7 +25,7 @@ The purpose of this project is to study emergent competitive strategies between 
 ```
 $PROJECT_ROOT
 │   # Readme utilities
-├── screenshots
+├── utils
 │   # Introductory research
 ├── Report.pdf
 │   # Key scripts
@@ -68,7 +68,7 @@ $PROJECT_ROOT
 ## Highlights
 
 <div align="center">
-  <img src="screenshots/hide_and_seek.gif" alt="landpage gif" width="300"/>
+  <img src="utils/hide_and_seek.gif" alt="landpage gif" width="300"/>
 </div>
 
 ## Methodology
@@ -86,7 +86,7 @@ The first step to successfully carry out this project is to build the environmen
 In order to implement our system, we decided on using Python’s Pygame library and TensorFlow. Each row of the agent’s observation space sees approximately 5° (for a total of 180°) and returns the first object the ray met in that direction and its distance from the agent (_Figure 1_).
 
 <div align="center">
-  <img src="screenshots/observation_space.png" alt="agent observation space" />
+  <img src="utils/observation_space.png" alt="agent observation space" />
   <br>
   <br>
 
@@ -124,7 +124,7 @@ _Table 1: Reward scheme for our environment._
 As previously stated, each agent uses two DRQNs, a main one and a target one. Both are made up of an Input, an LSTM, and two Dense layers, with size 128 and 8 (dimension of the action space), respectively. Moreover, the Input layer is made up of the 20 previous observations, whilst the LSTM layer has a size of 256. A visual representation can be seen in _Figure 2_:
 
 <div align="center">
-  <img src="screenshots/drqn_architecture.png" alt="drqn architecture" />
+  <img src="utils/drqn_architecture.png" alt="drqn architecture" />
   <br>
   <br>
 
@@ -161,13 +161,13 @@ _Table 2: Deep Recurrent Q-Network hyperparameters and experimental settings._
 In order to evaluate our two agents, we decided on observing the returned average cumulative reward instead of creating a new environment. The reason behind this is that the mentioned metric is considered to be satisfactory for understanding whether an agent is improving or not (Mahadevan, [1996](https://link.springer.com/article/10.1007/BF00114727)). Moreover, even after 3K episodes (ℰ min achieved at ~2K) our agents’ models still have not completely converged, proving that longer training is required. Nevertheless, the cumulative reward of both agents is showing an upward trend, indicating that they are learning (_Figure 5_). Both Seeker and Hider learnt to efficiently explore the environment (_Figure 6_). Moreover, the Seeker is learning to effectively catch the Hider within a minimal number of steps, whilst the Hider is learning how to increase its reward by moving as often as possible, and also evade the Seeker. With that being said, all of the metrics considered for the evaluation process overall show signs of learning.
 
 <div align="center">
-  <img src="screenshots/average_cumulative_reward.png" alt="average cumulative reward" />
+  <img src="utils/average_cumulative_reward.png" alt="average cumulative reward" />
   <br>
   <br>
 
 _Figure 5: The average cumulative reward for both agents across 3K episodes. Hider in orange, Seeker in blue._
 
-  <img src="screenshots/number_of_collisions.png" alt="number of collisions" />
+  <img src="utils/number_of_collisions.png" alt="number of collisions" />
   <br>
   <br>
 
