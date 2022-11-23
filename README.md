@@ -14,7 +14,7 @@ The purpose of this project is to study emergent competitive strategies between 
 
 - Multi Agent Reinforcement Learning
 - Deep Recurrent Q-Network
-- OpenAI Gym
+- Partially Observable MDP
 - Tensorflow
 - Pygame
 - Decayed Epsilon Greedy Policy
