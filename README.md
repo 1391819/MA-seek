@@ -119,7 +119,7 @@ _Table 1: Reward scheme for our environment._
 
 ## Implementation
 
-As previously stated, each agent uses two DRQNs, a main one and a target one. Both are made up of an Input, an LSTM, and two Dense layers, with sizes 128 and 8 (dimension of the action space), respectively. Moreover, the Input layer is made up of the 20 previous observations, whilst the LSTM layer has a size of 256. A visual representation can be seen in _Figure 2_:
+As previously stated, each agent uses two DRQNs, a main one and a target one. Both are made up of an Input, an LSTM, and two Dense layers, with sizes 128 and 8 (dimensions of the action space), respectively. Moreover, the Input layer is made up of the 20 previous observations, whilst the LSTM layer has a size of 256. A visual representation can be seen in _Figure 2_:
 
 <div align="center">
   <img src="utils/drqn_architecture.png" alt="drqn architecture" />
@@ -173,7 +173,7 @@ _Figure 6: The number of collisions for each episode. Hider in orange, Seeker in
 
 </div>
 
-Although I am definitely satisfied with the final software and results, there are a number of flaws which are mainly design related. More particularly, there are two key issues concerning the environment itself which could have affected the final learning process. Until proven otherwise, we must assume that they did. The following are:
+Although I am satisfied with the final software and results, there are some flaws which are mainly design related. More particularly, there are two key issues concerning the environment itself which could have affected the final learning process. Until proven otherwise, we must assume that they did. The following are:
 
 - sometimes the agents are given a reward (i.e., seeker within hider radar), even if there is a wall between them, as long as they are right next to the wall. This, unfortunately, happens due to the way the entire game was built (i.e., parallel lines problem).
 - agents can effectively spawn surrounded by walls, leading to a “useless” episode. This is one of the reasons why we had to introduce a max timesteps variable for each episode.
