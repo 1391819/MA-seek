@@ -6,8 +6,6 @@
 
 <div align="justify">
 
-## About
-
 The purpose of this project is to study emergent competitive strategies between agents controlled by autonomous [Deep Recurrent Q-Networks](https://arxiv.org/abs/1507.06527) (DRQN). More particularly, the investigation will be carried out within a custom-built environment where two agents, a Seeker and a Hider, will play a version of the pursuit-evasion game.
 
 ## Stack
