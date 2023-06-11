@@ -10,20 +10,31 @@ The purpose of this project is to study emergent competitive strategies between 
 
 ## Roadmap
 
-- [x] Research how AI has been used in games
-- [x] Design the game
-- [x] Decide on the algorithm and components to be used
-- [x] Train and test the model
-- [ ] Fix environment problems discussed in the Evaluation section
-- [ ] Further increase the training time and analyse new results
-- [ ] Improve project scalability (i.e., number of agents, grid size)
-- [ ] Implement a prioritised experience replay
-- [ ] Investigate different algorithms and reward schemes
-- [ ] Create different files for training and testing
-  - Right now, the application is constantly training
-  - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
-- [ ] Create a new environment for testing the agents
-- [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
+- [x]  Research how AI has been used in games
+- [x]  Design and implement the game environment using pygame
+    - [x]  Develop the grid world environment
+    - [x]  Implement the radar mechanism
+- [x]  Define the action space and observation space for the agents
+- [x]  Create separate main and target DRQN networks
+- [x]  Implement a decayed epsilon-greedy policy for exploration and exploitation during training
+- [x]  Set up a replay buffer to store agent transitions and enable random sampling during the training process
+- [x]  Design the reward scheme considering the balance between positive and negative rewards
+- [x]  Train the agents
+- [x]  Conduct hyperparameter optimization experiments
+- [x]  Evaluate the performance of the agents
+- [x]  Analyse the learning progress
+- [x]  Identify design flaws in the environment and address them
+- [x]  Consider future work and potential improvements
+    - [ ]  Fix environment problems discussed in the Evaluation section
+    - [ ]  Further increase the training time and analyse new results
+    - [ ]  Improve project scalability (i.e., number of agents, grid size)
+    - [ ]  Implement a prioritised experience replay
+    - [ ]  Investigate different algorithms and reward schemes
+    - [ ]  Create different files for training and testing
+        - Right now, the application is constantly training
+        - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
+    - [ ]  Create a new environment for testing the agents
+    - [ ]  Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Stack
 
