@@ -8,6 +8,23 @@
 
 The purpose of this project is to study emergent competitive strategies between agents controlled by autonomous [Deep Recurrent Q-Networks](https://arxiv.org/abs/1507.06527) (DRQN). More particularly, the investigation will be carried out within a custom-built environment where two agents, a Seeker and a Hider, will play a version of the pursuit-evasion game.
 
+## Roadmap
+
+- [x] Research how AI has been used in games
+- [x] Design the game
+- [x] Decide on the algorithm and components to be used
+- [x] Train and test the model
+- [ ] Fix environment problems discussed in the Evaluation section
+- [ ] Further increase the training time and analyse new results
+- [ ] Improve project scalability (i.e., number of agents, grid size)
+- [ ] Implement a prioritised experience replay
+- [ ] Investigate different algorithms and reward schemes
+- [ ] Create different files for training and testing
+  - Right now, the application is constantly training
+  - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
+- [ ] Create a new environment for testing the agents
+- [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
+
 ## Stack
 
 - Multi Agent Reinforcement Learning
@@ -45,23 +62,6 @@ $PROJECT_ROOT
   │   # DRQN
   └── drqn.py
 ```
-
-## Roadmap
-
-- [x] Research how AI has been used in games
-- [x] Design the game
-- [x] Decide on the algorithm and components to be used
-- [x] Train and test the model
-- [ ] Fix environment problems discussed in the Evaluation section
-- [ ] Further increase the training time and analyse new results
-- [ ] Improve project scalability (i.e., number of agents, grid size)
-- [ ] Implement a prioritised experience replay
-- [ ] Investigate different algorithms and reward schemes
-- [ ] Create different files for training and testing
-  - Right now, the application is constantly training
-  - Moreover, the exploration/exploitation phase needs to be manually changed in order to see if the agents are learning anything
-- [ ] Create a new environment for testing the agents
-- [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Highlights
 
