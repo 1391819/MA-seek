@@ -10,28 +10,28 @@ The purpose of this project is to study emergent competitive strategies between 
 
 ## Roadmap
 
-- [x]  Research AI usage in games (DQNs)
-- [x]  Design and implement game environment
-    - [x]  grid world generation
-    - [x]  agents’ action space and observation space
-    - [x]  radar mechanism (POMDP)
-- [x]  Create separate main and target DRQN networks
-- [x]  Implement different techniques that could improve the learning process
-    - [x]  decayed epsilon greedy policy
-    - [x]  replay buffer
-- [x]  Develop and fine-tune the agents’ reward scheme
-- [x]  Train the agents and perform hyperparameter optimisation
-- [x]  Evaluate and analyse the performance of the agents
-- [x]  Identify design flaws in the environment
-- [ ]  Consider future work and potential improvements
-    - [ ]  fix environment problems discussed in the *Evaluation section*
-    - [ ]  further increase the training time and analyse new results
-    - [ ]  improve project scalability (i.e., number of agents, grid size)
-    - [ ]  implement a prioritised experience replay
-    - [ ]  investigate different algorithms and reward schemes
-    - [ ]  code refactoring
-    - [ ]  create separate testing environment
-    - [ ]  experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
+- [x] Research AI usage in games (DQNs)
+- [x] Design and implement game environment
+  - [x] Generate grid world
+  - [x] Define agents' action space and observation space
+  - [x] Implement radar mechanism (POMDP)
+- [x] Create separate main and target DRQN networks
+- [x] Implement techniques to improve the learning process
+  - [x] Apply Decayed Epsilon Greedy policy
+  - [x] Utilise Replay Buffer
+- [x] Develop and fine-tune agents' reward scheme
+- [x] Train agents and perform hyperparameter optimisation
+- [x] Evaluate and analyse agents' performance
+- [x] Identify design flaws in the environment
+- [ ] Consider future work and potential improvements
+  - [ ] Fix environment problems discussed in the *Evaluation section*
+  - [ ] Increase training time and analyse new results
+  - [ ] Improve project scalability (e.g., number of agents, grid size)
+  - [ ] Implement prioritised experience replay
+  - [ ] Explore different algorithms and reward schemes
+  - [ ] Refactor code for better structure and maintainability
+  - [ ] Create separate testing environment
+  - [ ] Experiment using [Ray](https://docs.ray.io/en/latest/rllib/index.html)
 
 ## Stack
 
