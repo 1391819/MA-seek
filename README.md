@@ -11,7 +11,7 @@ The purpose of this project is to study emergent competitive strategies between 
 ## Roadmap
 
 - [x]  Research AI usage in games (DQNs)
-- [x]  Design and implement game environment:
+- [x]  Design and implement game environment
     - [x]  grid world generation
     - [x]  agents’ action space and observation space
     - [x]  radar mechanism (POMDP)
@@ -23,8 +23,8 @@ The purpose of this project is to study emergent competitive strategies between 
 - [x]  Train the agents and perform hyperparameter optimisation
 - [x]  Evaluate and analyse the performance of the agents
 - [x]  Identify design flaws in the environment
-- [ ]  Consider future work and potential improvements:
-    - [ ]  fix environment problems discussed in the *Evaluation section*
+- [ ]  Consider future work and potential improvements
+    - [ ]  fix environment problems discussed in the *Evaluation section*
     - [ ]  further increase the training time and analyse new results
     - [ ]  improve project scalability (i.e., number of agents, grid size)
     - [ ]  implement a prioritised experience replay
