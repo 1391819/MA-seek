@@ -35,11 +35,11 @@ The purpose of this project is to study emergent competitive strategies between 
 
 ## Stack
 
-- Multi Agent Reinforcement Learning
+- TensorFlow
+- Pygame
+- Multi Agent Reinforcement Learning (MARL)
 - Deep Recurrent Q-Network
 - Partially Observable MDP
-- Tensorflow
-- Pygame
 - Decayed Epsilon Greedy Policy
 - Experience replay
 
